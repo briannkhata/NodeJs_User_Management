@@ -22,14 +22,24 @@ app.set('view engine','ejs')
 
 
 //home
-app.get('',(req,res) => {
-    const locals = {
-        title :"Node Js",
-        description : "User Management System"
-    }
-    res.render("index", locals)
-});
+// app.get('',(req,res) => {
+//     const locals = {
+//         title :"Node Js",
+//         pagetitle :"Dashbaord",
+//         description : "User Management System"
+//     }
+//     res.render("index", locals)
+// });
 
+
+
+//handle 404
+
+app.get('*' , (req , res)=>{
+
+   res.status(404).render('404',{pagetitle:"Error"});
+
+})
 
 
 

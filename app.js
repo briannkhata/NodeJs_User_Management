@@ -3,6 +3,10 @@ require('dotenv').config();
 const express = require("express");
 const expressLayouts = require('express-ejs-layouts')
 
+
+const cutomerRoutes = require('./server/routes/cutomer.js')
+
+
 const app = express();
 const port = process.env.PORT || 5000
 
@@ -19,30 +23,14 @@ app.set('layout','./layouts/main');
 app.set('view engine','ejs')
 
 
+//Routes
+app.use('/',cutomerRoutes);
 
 
-//home
-// app.get('',(req,res) => {
-//     const locals = {
-//         title :"Node Js",
-//         pagetitle :"Dashbaord",
-//         description : "User Management System"
-//     }
-//     res.render("index", locals)
-// });
-
-
-
-//handle 404
-
-app.get('*' , (req , res)=>{
-
+//Handle 404
+app.get('*', (req , res)=>{
    res.status(404).render('404',{pagetitle:"Error"});
-
 })
-
-
-
 
 
 app.listen(port,()=>{

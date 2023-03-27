@@ -4,11 +4,13 @@ const express = require("express");
 const expressLayouts = require('express-ejs-layouts')
 
 
-const cutomerRoutes = require('./server/routes/cutomer.js')
-
+const connectDB = require('./server/config/db')
 
 const app = express();
 const port = process.env.PORT || 5000
+
+//connect to Database
+connectDB();
 
 
 app.use(express.urlencoded({extended: true }));
@@ -22,6 +24,7 @@ app.use(expressLayouts);
 app.set('layout','./layouts/main');
 app.set('view engine','ejs')
 
+const cutomerRoutes = require('./server/routes/cutomer.js')
 
 //Routes
 app.use('/',cutomerRoutes);
@@ -34,5 +37,5 @@ app.get('*', (req , res)=>{
 
 
 app.listen(port,()=>{
-    console.log(`App listening on port ${port}`)
+    console.log(`Application running on port ${port}`)
 })

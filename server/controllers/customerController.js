@@ -4,7 +4,7 @@ const homepage = async (req, res) => {
     pagetitle: "Dashbaord",
     description: "User Management System",
   };
-  res.render("index", locals);
+  res.render("index.ejs", locals);
 };
 
 module.exports = {

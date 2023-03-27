@@ -14,7 +14,6 @@ app.use(express.json());
 app.use(express.static('public'));
 
 //Templating engine
-
 app.use(expressLayouts);
 app.set('layout','./layouts/main');
 app.set('view engine','ejs')
@@ -23,8 +22,12 @@ app.set('view engine','ejs')
 
 
 //home
-app.get('',(re,res) => {
-    res,send("Hello")
+app.get('',(req,res) => {
+    const locals = {
+        title :"Node Js",
+        description : "User Management System"
+    }
+    res.render("index", locals)
 });
 
 

@@ -4,6 +4,10 @@ const express = require("express");
 const path = require("path");
 const connectDB = require("./server/config/db");
 const expressLayouts = require("express-ejs-layouts");
+//const flash = require("express-flash-message");
+const flash = require("express-flash");
+
+const session = require("express-session");
 const customerRoutes = require("./server/routes/customer");
 
 const app = express();
@@ -18,19 +22,30 @@ app.use(express.urlencoded({ extended: true }));
 //statuc files
 app.use(express.static("public"));
 
+//express sessions
+app.use(
+  session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      secure: true,
+      maxAge: 1000 * 60 * 24 * 7,
+    },
+  })
+);
+
+//Flash messages
+app.use(flash({ sessionKeyName: "flashMessage" }));
+
 // Templating engine
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(expressLayouts);
-app.set('layout', path.join(__dirname, 'views/layouts/main'));
+app.set("layout", path.join(__dirname, "views/layouts/main"));
 
 // Mount routes
-
-app.get('/', (req, res) => {
-  res.render('index'); // assuming the file is called myfile.ejs and is located in your views folder
-});
-
-//app.use("/", customerRoutes);
+app.use("/", customerRoutes);
 
 // Handle 404 errors
 app.use((req, res) => {
